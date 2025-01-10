@@ -58,8 +58,9 @@ class SecretAWS():
             client_secret=secret.get('CLIENT_SECRET'),
             token_uri="https://oauth2.googleapis.com/token",
         )
-        print(credentials.token)
         if credentials.expired:
             credentials.refresh(requests.Request())
+            secret['ACCESS_TOKEN'] = credentials.token
+            secret['REFRESH_TOKEN'] = credentials.refresh_token
             self.update_secret(secret)
         return credentials

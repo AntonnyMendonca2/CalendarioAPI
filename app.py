@@ -9,15 +9,14 @@ import requests
 
 def main(credencials):
     url = "https://www.googleapis.com/calendar/v3/calendars/primary/events"
+    now = datetime.utcnow()
+    formatted_date = now.strftime("%Y-%m-%dT00:00:00Z")
     headers = {
         "Authorization": f"Bearer {credencials.token}",
         "Accept": "application/json"
     }
     params = {
-        "timeMin": "2025-01-09T00:00:00Z",
-        "maxResults": 10,  # Limita o número de eventos retornados
-        "singleEvents": True,  # Exibe eventos recorrentes individualmente
-        "orderBy": "startTime"  # Ordena os eventos por hora de início
+        "timeMin": formatted_date
     }
     response = requests.get(url, headers=headers, params=params)
     return response.json()
